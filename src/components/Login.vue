@@ -14,13 +14,15 @@
                     <!-- s: input -->
                     <div class="form-group my-3">
                       <label for="email" class="mb-1 text-muted">Email Address</label>
-                      <input type="email" id="email" v-model="email" name="email" value="" class="form-control" autofocus />
+                      <input type="email" id="email" v-model="email" name="email" value="" class="form-control"
+                        autofocus />
                     </div>
 
                     <!-- s: input -->
                     <div class="form-group my-3">
                       <label for="password" class="mb-1 text-muted">Password</label>
-                      <input type="password" id="password" v-model="password" name="password" value="" class="form-control" />
+                      <input type="password" id="password" v-model="password" name="password" value=""
+                        class="form-control" />
                     </div>
 
                     <div class="mt-4">
@@ -48,21 +50,24 @@ export default {
     }
   },
   methods: {
-    async login () {
-      try{
+    async login() {
+      try {
         const response = await axios.post('http://127.0.0.1:8000/api/v1/auth/login', {
           email: this.email,
           password: this.password
         });
-        if(response && response.status === 200) {
-          localStorage.setItem('accessToken', response.data.user.accessToken);
-          alert("Login success")
+        if (response && response.status === 200) {
+          const accessToken = response.data.user.accessToken;
+          localStorage.setItem('accessToken', accessToken);
+          alert("Login success");
           this.$router.push('/home');
         }
-      }catch(err){
-        alert("Email or password incorrect")
+      } catch (err) {
+        alert("Email or password incorrect");
       }
     }
+
+
   }
 }
 

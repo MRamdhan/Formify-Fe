@@ -7,7 +7,7 @@
                     <a class="nav-link active" href="#">Administrator</a>
                 </li>
                 <li class="nav-item">
-                    <button type="button" class="btn bg-white text-primary ms-4" @click="logout">Logout</button>
+                    <button type="button" class="btn bg-white text-primary ms-4">Logout</button>
                 </li>
             </ul>
         </div>
@@ -45,10 +45,10 @@
 
                         <ul class="nav nav-tabs mb-2 justify-content-center">
                             <li class="nav-item">
-                                <a class="nav-link" href="detail-form.html">Questions</a>
+                                <a class="nav-link" href="/home">Questions</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="responses.html">Responses</a>
+                                <a class="nav-link active" href="/responses">Responses</a>
                             </li>
                         </ul>
                     </div>
@@ -86,6 +86,8 @@
         </div>
     </main>
 </template>
+
+
 <script>
 import axios from 'axios';
 

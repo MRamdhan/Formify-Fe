@@ -1,9 +1,8 @@
 <script setup>
-import HomeView from '../components/Home.vue'
+import Submit from '../components/Submit.vue'
 </script>
-
 <template>
     <main>
-        <HomeView />
+        <Submit />
     </main>
 </template>

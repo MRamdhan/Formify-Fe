@@ -25,7 +25,22 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: () => import('../views/AboutView.vue')
-    }
+    },
+    {
+      path: '/responses',
+      name: 'responses',
+      component: () => import('../views/ResponseView.vue')
+    },
+    {
+      path: '/submit',
+      name: 'submit',
+      component: () => import('../views/SubmitView.vue')
+    },
+    {
+      path: '/form/:slug',
+      name: 'form-detail',
+      component: () => import('../components/Detail.vue')
+    },
   ]
 })
 
