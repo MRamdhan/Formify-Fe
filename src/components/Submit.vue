@@ -3,7 +3,7 @@
         <div class="hero py-5 bg-light">
             <div class="container text-center">
                 <h2 class="mb-3">
-                    {{ $route.params.slug }}
+                    Stacks of Web Tech Members
                 </h2>
                 <div class="text-muted">
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit.

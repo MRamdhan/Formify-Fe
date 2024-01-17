@@ -32,14 +32,16 @@ const router = createRouter({
       component: () => import('../views/ResponseView.vue')
     },
     {
-      path: '/submit',
+      path: '/submit-response/:name/:slug',
       name: 'submit',
-      component: () => import('../views/SubmitView.vue')
+      component: () => import('../views/SubmitView.vue'),
+      props: true
     },
     {
-      path: '/form/:slug',
+      path: '/form/:name/:description/:slug',
       name: 'form-detail',
-      component: () => import('../components/Detail.vue')
+      component: () => import('../components/Detail.vue'),
+      props: true
     },
   ]
 })

@@ -15,7 +15,7 @@
                 <h6 class="mb-3">List Form</h6>
                 
                 <div v-for="form in forms" :key="form.id">
-                    <router-link :to="{ name: 'form-detail', params: { slug: form.slug }}" class="card card-default mb-3">
+                    <router-link :to="{ name: 'form-detail', params: { name: form.name, description: form.description, slug: form.slug }}" class="card card-default mb-3">
                         <div class="card-body">
                             <h5 class="mb-1">{{ form.name }}</h5>
                             <small class="text-muted">@{{ form.slug }} (limit for {{ form.limit_one_response ? 1 : 'unlimited' }} response)</small>

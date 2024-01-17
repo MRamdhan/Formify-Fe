@@ -3,9 +3,9 @@
     <main>
         <div class="hero py-5 bg-light">
             <div class="container text-center">
-                <h2>{{ $route.params.slug }}</h2>
+                <h2>{{ $route.params.name }}</h2>
                 <div class="text-muted mb-4">
-                    To save web tech members biodata
+                    {{ $route.params.description }}
                 </div>
                 <div>
                     <div>
@@ -22,17 +22,22 @@
                 <div class="row justify-content-center ">
                     <div class="col-lg-5 col-md-6">
                         <div class="input-group mb-5">
-                            <input type="text" class="form-control form-link" readonly
-                                value="http://localhost:8080/forms/biodata" />
-                            <a href="/submit" class="btn btn-primary">Copy</a>
+                            <input type="text" class="form-control form-link" readonly :value="getFormUrl"
+                                ref="copyInput" />
+                            <button @click="copyToClipboard" class="btn btn-primary">
+                                Copy
+                            </button>
                         </div>
 
                         <ul class="nav nav-tabs mb-2 justify-content-center">
                             <li class="nav-item">
-                                <a class="nav-link active" href="detail-form.html">Questions</a>
+                                <!-- <a class="nav-link active" href="">Questions</a> -->
+                                <router-link :to="{ name: 'form-detail' }" class="nav-link active">
+                                    Questions
+                                </router-link>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="responses.html">Responses</a>
+                                <a class="nav-link" href="/responses">Responses</a>
                             </li>
                         </ul>
                     </div>
@@ -220,18 +225,47 @@
                                     <div class="mt-3">
                                         <button type="submit" class="btn btn-outline-primary">Save</button>
                                     </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
+
                     </div>
-
                 </div>
-            </div>
 
+            </div>
         </div>
-    </div>
-</main>
+    </main>
 </template>
 
 <script setup>
 import Nav from '../components/Nav.vue'
+</script>
+
+
+<script>
+import axios from 'axios';
+
+export default {
+    props: ['slug'],
+    data() {
+        return {
+            slug: this.slug || 'biodata',
+        };
+    },
+    computed: {
+        getFormUrl() {
+            return `http://localhost:5173/submit-response/${this.$route.params.name}/${this.slug}`;
+        },
+    },
+    methods: {
+        async copyToClipboard() {
+            try {
+                await navigator.clipboard.writeText(this.$refs.copyInput.value);
+                alert('Copied to clipboard');
+            } catch (err) {
+                console.log('Unable to copy to clipboard', err);
+            }
+        },
+    },
+};
 </script>
