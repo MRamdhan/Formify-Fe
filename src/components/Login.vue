@@ -66,8 +66,6 @@ export default {
         alert("Email or password incorrect");
       }
     }
-
-
   }
 }
 

@@ -1,271 +1,212 @@
 <template>
     <Nav />
-    <main>
-        <div class="hero py-5 bg-light">
-            <div class="container text-center">
-                <h2>{{ $route.params.name }}</h2>
-                <div class="text-muted mb-4">
-                    {{ $route.params.description }}
-                </div>
-                <div>
+    <div>
+        <main>
+            <div class="hero py-5 bg-light">
+                <div class="container text-center">
+                    <h2>{{ $route.params.name }}</h2>
+                    <div class="text-muted mb-4">{{ $route.params.description }}</div>
                     <div>
-                        <small>For user domains</small>
+                        <div>
+                            <small>For user domains</small>
+                        </div>
+                        <small><span class="text-primary">webtech.id, webtech.org</span></small>
                     </div>
-                    <small><span class="text-primary">webtech.id, webtech.org</span></small>
                 </div>
             </div>
-        </div>
 
-        <div class="py-5">
-            <div class="container">
+            <div class="py-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-5 col-md-6">
+                            <div class="input-group mb-5">
+                                <input type="text" class="form-control form-link" readonly :value="getFormUrl"
+                                    ref="copyInput" />
+                                <button @click="copyToClipboard" class="btn btn-primary">
+                                    Copy
+                                </button>
+                            </div>
 
-                <div class="row justify-content-center ">
-                    <div class="col-lg-5 col-md-6">
-                        <div class="input-group mb-5">
-                            <input type="text" class="form-control form-link" readonly :value="getFormUrl"
-                                ref="copyInput" />
-                            <button @click="copyToClipboard" class="btn btn-primary">
-                                Copy
-                            </button>
+                            <ul class="nav nav-tabs mb-2 justify-content-center">
+                                <li class="nav-item">
+                                    <router-link :to="{ name: 'form-detail' }" class="nav-link active">
+                                        Questions
+                                    </router-link>
+                                </li>
+                                <li class="nav-item">
+                                    <router-link :to="{ name: 'responses' }" class="nav-link">
+                                        Responses
+                                    </router-link>
+                                </li>
+                            </ul>
                         </div>
-
-                        <ul class="nav nav-tabs mb-2 justify-content-center">
-                            <li class="nav-item">
-                                <!-- <a class="nav-link active" href="">Questions</a> -->
-                                <router-link :to="{ name: 'form-detail' }" class="nav-link active">
-                                    Questions
-                                </router-link>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/responses">Responses</a>
-                            </li>
-                        </ul>
                     </div>
-                </div>
 
-                <div class="row justify-content-center">
-                    <div class="col-lg-5 col-md-6">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-5 col-md-6">
 
-                        <div class="question-item  card card-default my-4">
-                            <div class="card-body">
-                                <div class="form-group my-3">
-                                    <input type="text" placeholder="Question" class="form-control" name="name" value="Name"
-                                        disabled />
-                                </div>
-
-                                <div class="form-group my-3">
-                                    <select name="choice_type" class="form-select" disabled>
-                                        <option>Choice Type</option>
-                                        <option selected value="short answer">Short Answer</option>
-                                        <option value="paragraph">Paragraph</option>
-                                        <option value="multiple choice">Multiple Choice</option>
-                                        <option value="dropdown">Dropdown</option>
-                                        <option value="checkboxes">Checkboxes</option>
-                                    </select>
-                                </div>
-                                <div class="form-check form-switch" aria-colspan="my-3">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="required" disabled
-                                        checked />
-                                    <label class="form-check-label" for="required">Required</label>
-                                </div>
-                                <div class="mt-3">
-                                    <button type="submit" class="btn btn-outline-danger">Remove</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="question-item card card-default my-4">
-                            <div class="card-body">
-                                <div class="form-group my-3">
-                                    <input type="text" placeholder="Question" class="form-control" name="name"
-                                        value="Address" disabled />
-                                </div>
-
-                                <div class="form-group my-3">
-                                    <select name="choice_type" class="form-select" disabled>
-                                        <option>Choice Type</option>
-                                        <option value="short answer">Short Answer</option>
-                                        <option selected value="paragraph">Paragraph</option>
-                                        <option value="multiple choice">Multiple Choice</option>
-                                        <option value="dropdown">Dropdown</option>
-                                        <option value="checkboxes">Checkboxes</option>
-                                    </select>
-                                </div>
-                                <div class="form-check form-switch" aria-colspan="my-3">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="required" />
-                                    <label class="form-check-label" for="required">Required</label>
-                                </div>
-                                <div class="mt-3">
-                                    <button type="submit" class="btn btn-outline-danger">Remove</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="question-item card card-default my-4">
-                            <div class="card-body">
-                                <div class="form-group my-3">
-                                    <input type="text" placeholder="Question" class="form-control" name="name" value="Sex"
-                                        disabled />
-                                </div>
-
-                                <div class="form-group my-3">
-                                    <select name="choice_type" class="form-select" disabled>
-                                        <option>Choice Type</option>
-                                        <option value="short answer">Short Answer</option>
-                                        <option value="paragraph">Paragraph</option>
-                                        <option selected value="multiple choice">Multiple Choice</option>
-                                        <option value="dropdown">Dropdown</option>
-                                        <option value="checkboxes">Checkboxes</option>
-                                    </select>
-                                </div>
-                                <div class="form-group my-3">
-                                    <textarea placeholder="Choices" class="form-control" name="choices" rows="4"
-                                        disabled>Male,Female,Others</textarea>
-                                    <div class="form-text">
-                                        Separate choices using comma ",".
-                                    </div>
-                                </div>
-                                <div class="form-check form-switch" aria-colspan="my-3">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="required" checked
-                                        disabled />
-                                    <label class="form-check-label" for="required">Required</label>
-                                </div>
-                                <div class="mt-3">
-                                    <button type="submit" class="btn btn-outline-danger">Remove</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="question-item card card-default my-4">
-                            <div class="card-body">
-                                <div class="form-group my-3">
-                                    <input type="text" placeholder="Question" class="form-control" name="name"
-                                        value="Born Date" disabled />
-                                </div>
-
-                                <div class="form-group my-3">
-                                    <select name="chocie_type" class="form-select" disabled>
-                                        <option>Choice Type</option>
-                                        <option value="short answer">Short Answer</option>
-                                        <option value="paragraph">Paragraph</option>
-                                        <option selected value="date">Date</option>
-                                        <option value="multiple choice">Multiple Choice</option>
-                                        <option value="dropdown">Dropdown</option>
-                                        <option value="checkboxes">Checkboxes</option>
-                                    </select>
-                                </div>
-                                <div class="form-check form-switch" aria-colspan="my-3">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="required" checked
-                                        disabled />
-                                    <label class="form-check-label" for="required">Required</label>
-                                </div>
-                                <div class="mt-3">
-                                    <button type="submit" class="btn btn-outline-danger">Remove</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="question-item card card-default my-4">
-                            <div class="card-body">
-                                <div class="form-group my-3">
-                                    <input type="text" placeholder="Question" class="form-control" name="name"
-                                        value="Hobbies" disabled />
-                                </div>
-
-                                <div class="form-group my-3">
-                                    <select name="choice_type" class="form-select" disabled>
-                                        <option>Choice Type</option>
-                                        <option value="short answer">Short Answer</option>
-                                        <option value="paragraph">Paragraph</option>
-                                        <option value="multiple choice">Multiple Choice</option>
-                                        <option value="dropdown">Dropdown</option>
-                                        <option selected value="checkboxes">Checkboxes</option>
-                                    </select>
-                                </div>
-                                <div class="form-group my-3">
-                                    <textarea placeholder="Choices" class="form-control" name="choices" rows="4"
-                                        disabled>Football,Guitar,Coding,Watching,Traveling</textarea>
-                                    <div class="form-text">
-                                        Separate choices using comma ",".
-                                    </div>
-                                </div>
-                                <div class="form-check form-switch" aria-colspan="my-3">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="required" disabled />
-                                    <label class="form-check-label" for="required">Required</label>
-                                </div>
-                                <div class="mt-3">
-                                    <button type="submit" class="btn btn-outline-danger">Remove</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="question-item card card-default my-4">
-                            <div class="card-body">
-                                <form>
+                            <div v-for="(question, index) in questions" :key="index"
+                                class="question-item card card-default my-4">
+                                <div class="card-body">
                                     <div class="form-group my-3">
-                                        <input type="text" placeholder="Question" class="form-control" name="name"
-                                            value="" />
+                                        <input type="text" :placeholder="question.name" class="form-control" :question="name"
+                                            disabled />
                                     </div>
 
                                     <div class="form-group my-3">
-                                        <select name="choice_type" class="form-select">
-                                            <option selected>Choice Type</option>
-                                            <option value="short answer">Short Answer</option>
-                                            <option value="paragraph">Paragraph</option>
-                                            <option value="date">Date</option>
-                                            <option value="multiple choice">Multiple Choice</option>
-                                            <option value="dropdown">Dropdown</option>
-                                            <option value="checkboxes">Checkboxes</option>
+                                        <select name="choice_type" class="form-select" disabled>
+                                            <option>Choice Type</option>
+                                            <option :question="choice" selected>{{ choice }}</option>
                                         </select>
                                     </div>
+
+                                    <div v-if="['multiple choice', 'dropdown', 'checkboxes'].includes(question.choice_type)"
+                                        class="form-group my-3">
+                                        <textarea placeholder="Choices" class="form-control" name="choices" rows="4"
+                                            :question="choices" disabled></textarea>
+                                        <div class="form-text">Separate choices using comma ",".</div>
+                                    </div>
+
                                     <div class="form-check form-switch" aria-colspan="my-3">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="required" />
+                                        <input class="form-check-input" type="checkbox" role="switch" id="required"
+                                            :checked="is_required" disabled />
                                         <label class="form-check-label" for="required">Required</label>
                                     </div>
-                                    <div class="mt-3">
-                                        <button type="submit" class="btn btn-outline-primary">Save</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
 
+                                    <div class="mt-3">
+                                        <button @click="removeAnswer(index)" class="btn btn-outline-danger">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                                    
+                            <div class="question-item card card-default my-4">
+                                <div class="card-body">
+                                    <form @submit.prevent="saveQuestion">
+                                        <div class="form-group my-3">
+                                            <input v-model="newQuestion.name" type="text" placeholder="Question"
+                                                class="form-control" />
+                                        </div>
+                                        <div class="form-group my-3">
+                                            <select v-model="newQuestion.choice_type" name="choice_type"
+                                                class="form-select">
+                                                <option selected>Choice Type</option>
+                                                <option value="short answer">Short Answer</option>
+                                                <option value="paragraph">Paragraph</option>
+                                                <option value="date">Date</option>
+                                                <option value="multiple choice">Multiple Choice</option>
+                                                <option value="dropdown">Dropdown</option>
+                                                <option value="checkboxes">Checkboxes</option>
+                                            </select>
+                                        </div>
+                                        <div v-if="['multiple choice', 'dropdown', 'checkboxes'].includes(newQuestion.choice_type)"
+                                            class="form-group my-3">
+                                            <textarea v-model="newQuestion.choices" placeholder="Choices"
+                                                class="form-control" name="choices" rows="4"></textarea>
+                                            <div class="form-text">Separate choices using a comma ",".</div>
+                                        </div>
+                                        <div class="form-check form-switch" aria-colspan="my-3">
+                                            <input v-model="newQuestion.required" class="form-check-input" type="checkbox"
+                                                role="switch" id="required" />
+                                            <label class="form-check-label" for="required">Required</label>
+                                        </div>
+                                        <div class="mt-3">
+                                            <button type="submit" class="btn btn-outline-primary">Save</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-
             </div>
-        </div>
-    </main>
+        </main>
+    </div>
 </template>
 
 <script setup>
-import Nav from '../components/Nav.vue'
+import Nav from "../components/Nav.vue";
 </script>
 
-
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
-    props: ['slug'],
+    props: ["slug"],
     data() {
         return {
-            slug: this.slug || 'biodata',
+            slug: this.slug || "biodata",
+            questions: [],
+            newQuestion: {
+                name: "",
+                choice_type: "",
+                choices: "",
+                required: false,
+            }
         };
     },
     computed: {
         getFormUrl() {
             return `http://localhost:5173/submit-response/${this.$route.params.name}/${this.slug}`;
         },
+        token() {
+            return localStorage.getItem('accessToken');
+        },
+        headers() {
+            return {
+                Authorization: 'Bearer ' + this.token
+            }
+        }
     },
     methods: {
         async copyToClipboard() {
             try {
                 await navigator.clipboard.writeText(this.$refs.copyInput.value);
-                alert('Copied to clipboard');
+                alert("Copied to clipboard");
             } catch (err) {
-                console.log('Unable to copy to clipboard', err);
+                console.log("Unable to copy to clipboard", err);
             }
         },
+        removeAnswer(index) {
+            this.answers.splice(index, 1);
+        },
+        async fetchQuestions() {
+            try {
+                const response = await axios.get("http://127.0.0.1:8000/api/v1/forms/biodata", { headers: this.headers });
+                // console.log("Response :", response.data);
+                this.questions = response.data.form.questions;
+                console.log(this.questions);
+            } catch (error) {
+                console.error("Error fetching answers:", error);
+            }
+        },
+        async saveQuestion() {
+            try {
+                const response = await axios.post(`http://127.0.0.1:8000/api/v1/forms/biodata/questions`, this.newQuestion, {
+                    headers: this.headers,
+                });
+                this.answers.push(response.data.question);
+                this.newQuestion = {
+                    name: "",
+                    choice_type: "",
+                    choices: "",
+                    required: false,
+                };
+                alert("Add question success");
+            } catch (error) {
+                const { message, errors } = error.response.data;
+                if (errors) {
+                    // Handle validation errors, display messages to the user
+                    console.error("Validation errors:", errors);
+                } else {
+                    // Handle other types of errors
+                    console.error("Error saving question:", message);
+                }
+            }
+        },
+    },
+    mounted() {
+        this.fetchQuestions();
     },
 };
 </script>
