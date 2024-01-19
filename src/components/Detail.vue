@@ -49,36 +49,37 @@
                                 class="question-item card card-default my-4">
                                 <div class="card-body">
                                     <div class="form-group my-3">
-                                        <input type="text" :placeholder="question.name" class="form-control" :question="name"
-                                            disabled />
+                                        <input type="text" :placeholder="question.name" class="form-control"
+                                            :value="question.name" disabled />
                                     </div>
 
                                     <div class="form-group my-3">
                                         <select name="choice_type" class="form-select" disabled>
                                             <option>Choice Type</option>
-                                            <option :question="choice" selected>{{ choice }}</option>
+                                            <option :value="choice" :selected="question.choice === choice">{{ choice }}
+                                            </option>
                                         </select>
                                     </div>
 
                                     <div v-if="['multiple choice', 'dropdown', 'checkboxes'].includes(question.choice_type)"
                                         class="form-group my-3">
                                         <textarea placeholder="Choices" class="form-control" name="choices" rows="4"
-                                            :question="choices" disabled></textarea>
+                                            :value="question.choices" disabled></textarea>
                                         <div class="form-text">Separate choices using comma ",".</div>
                                     </div>
 
                                     <div class="form-check form-switch" aria-colspan="my-3">
                                         <input class="form-check-input" type="checkbox" role="switch" id="required"
-                                            :checked="is_required" disabled />
+                                            :checked="question.is_required" disabled />
                                         <label class="form-check-label" for="required">Required</label>
                                     </div>
 
                                     <div class="mt-3">
                                         <button @click="removeAnswer(index)" class="btn btn-outline-danger">Remove</button>
                                     </div>
+
                                 </div>
                             </div>
-                                    
                             <div class="question-item card card-default my-4">
                                 <div class="card-body">
                                     <form @submit.prevent="saveQuestion">
@@ -105,8 +106,8 @@
                                             <div class="form-text">Separate choices using a comma ",".</div>
                                         </div>
                                         <div class="form-check form-switch" aria-colspan="my-3">
-                                            <input v-model="newQuestion.required" class="form-check-input" type="checkbox"
-                                                role="switch" id="required" />
+                                            <input v-model="newQuestion.is_required" class="form-check-input"
+                                                type="checkbox" role="switch" id="required" />
                                             <label class="form-check-label" for="required">Required</label>
                                         </div>
                                         <div class="mt-3">
@@ -115,7 +116,6 @@
                                     </form>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -137,11 +137,12 @@ export default {
         return {
             slug: this.slug || "biodata",
             questions: [],
+            answers: [],
             newQuestion: {
                 name: "",
                 choice_type: "",
                 choices: "",
-                required: false,
+                is_required: false,
             }
         };
     },
@@ -168,38 +169,42 @@ export default {
             }
         },
         removeAnswer(index) {
-            this.answers.splice(index, 1);
+            if (Array.isArray(this.questions) && index >= 0 && index < this.questions.length) {
+                this.questions.splice(index, 1);
+                alert("remove success")
+            } else {
+                console.error('Invalid index or questions array is not properly initialized.');
+            }
         },
         async fetchQuestions() {
             try {
                 const response = await axios.get("http://127.0.0.1:8000/api/v1/forms/biodata", { headers: this.headers });
-                // console.log("Response :", response.data);
                 this.questions = response.data.form.questions;
-                console.log(this.questions);
+                console.log("Response :", this.questions);
             } catch (error) {
                 console.error("Error fetching answers:", error);
             }
         },
         async saveQuestion() {
             try {
-                const response = await axios.post(`http://127.0.0.1:8000/api/v1/forms/biodata/questions`, this.newQuestion, {
-                    headers: this.headers,
-                });
-                this.answers.push(response.data.question);
-                this.newQuestion = {
-                    name: "",
-                    choice_type: "",
-                    choices: "",
-                    required: false,
-                };
-                alert("Add question success");
+                const response = await axios.post(`http://127.0.0.1:8000/api/v1/forms/biodata/questions`, this.newQuestion, { headers: this.headers });
+                if (response && response.data) {
+                    this.answers.push(response.data.question);
+                    this.newQuestion = {
+                        name: "",
+                        choice_type: "",
+                        choices: "",
+                        is_required: false,
+                    };
+                    alert("Add question success");
+                } else {
+                    console.error("Invalid response format:", response);
+                }
             } catch (error) {
                 const { message, errors } = error.response.data;
                 if (errors) {
-                    // Handle validation errors, display messages to the user
                     console.error("Validation errors:", errors);
                 } else {
-                    // Handle other types of errors
                     console.error("Error saving question:", message);
                 }
             }
