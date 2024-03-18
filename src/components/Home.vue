@@ -58,6 +58,7 @@ export default {
             try {
                 const response = await axios.get('http://127.0.0.1:8000/api/v1/forms',{headers:this.headers});
                 this.forms = response.data.forms;
+                console.log(response);
             } catch(err){
                 console.log('Error fetching forms', err);
             }

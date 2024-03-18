@@ -75,7 +75,8 @@
                                     </div>
 
                                     <div class="mt-3">
-                                        <button @click="removeAnswer(index)" class="btn btn-outline-danger">Remove</button>
+                                        <button @click="confirmRemoveQuestion(index)"
+                                            class="btn btn-outline-danger">Remove</button>
                                     </div>
 
                                 </div>
@@ -168,14 +169,29 @@ export default {
                 console.log("Unable to copy to clipboard", err);
             }
         },
-        removeAnswer(index) {
-            if (Array.isArray(this.questions) && index >= 0 && index < this.questions.length) {
-                this.questions.splice(index, 1);
-                alert("remove success")
-            } else {
-                console.error('Invalid index or questions array is not properly initialized.');
+        async confirmRemoveQuestion(index) {
+            if (confirm('Are you sure you want to remove this question?')) {
+                try {
+                    await this.removeQuestion(index);
+                } catch (err) {
+                    console.error("Error removing question:", err);
+                }
             }
         },
+        async removeQuestion(index) {
+            try {
+                const response = await axios.delete(`http://127.0.0.1:8000/api/v1/forms/${this.slug}/questions/${this.questions[index].id}`, { headers: this.headers });
+                if (response.status === 200) {
+                    this.questions.splice(index, 1);
+                    alert("Question removed successfully");
+                } else {
+                    console.error("Failed to remove question. Status:", response.status);
+                }
+            } catch (error) {
+                console.error("Error removing question:", error);
+            }
+        },
+
         async fetchQuestions() {
             try {
                 const response = await axios.get("http://127.0.0.1:8000/api/v1/forms/biodata", { headers: this.headers });
